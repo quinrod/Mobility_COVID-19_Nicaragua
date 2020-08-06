@@ -24,12 +24,12 @@ movilidad_nica <- movilidad_global %>%
 # reshape
 movilidad_nica_final <- movilidad_nica %>%
   reshape2::melt(.) %>%
-  set_colnames(c('dep', 'fecha', 'actividad', 'mov_desde_lineabase')) %>%
+  set_colnames(c('State', 'fecha', 'actividad', 'mov_desde_lineabase')) %>%
   mutate(fecha = as.Date(fecha,"%Y-%m-%d"),
          dias = as.numeric(fecha))
 
 # create filter
-selected_dep <- c('Masaya')
+selected_dep <- c('Masaya', 'Granada')
 selected_act <- c('tiendas_y_ocio')
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
@@ -41,9 +41,13 @@ mov_nica <- movilidad_nica_final %>%
   mutate(mov = rollmean(mov_desde_lineabase, k = 4, fill = NA)) %>%
   ungroup() %>%
   ggplot(aes(fecha, mov, col = dep)) +
-  geom_point(aes(frame = fecha)) + 
+  geom_point(shape = 21, aes(fill = mov), size = 5, stroke = 1) + 
   geom_line() + 
-  transition_reveal(fecha)
+  ylab("Moving mean of 1 month from baseline") +
+  theme_minimal(base_size = 16, base_family = "Georgia") +
+  labs(title = "Mobility trend post COVID-19 in selected states", 
+       caption = "Source: Google Mobility") +
+  transition_reveal(fecha) 
 
 # save as a GIF
 animate(mov_nica, fps = 10, width = 750, height = 450)
