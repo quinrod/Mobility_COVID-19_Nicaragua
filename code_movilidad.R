@@ -30,7 +30,7 @@ movilidad_nica_final <- movilidad_nica %>%
 
 # create filter
 selected_dep <- c('Nicaragua')
-selected_actividad <- c('tiendas_y_ocio')
+selected_act <- c('tiendas_y_ocio')
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
 
@@ -42,13 +42,14 @@ mov_nica <- movilidad_nica_final %>%
   ungroup() %>%
   ggplot(aes(fecha, mov, col = dep)) +
   geom_point(aes(frame = fecha)) + 
-  geom_line() 
+  geom_line() + 
+  transition_reveal(fecha)
 
-mov_nica + transition_reveal(fecha) 
+# save as a GIF
+animate(mov_nica, fps = 10, width = 750, height = 450)
+anim_save("/Users/quinrod/projects/GitHub/Mobility-COVID-19_Nicaragua/figures/movilidad.gif")
 
-# extract original table
-movilidad %>%
-  write.csv(.,"/Users/quinrod/downloads/movilidad.csv", row.names = FALSE)
+
 
   
   
