@@ -29,7 +29,7 @@ movilidad_nica_final <- movilidad_nica %>%
          dias = as.numeric(fecha))
 
 # create filter
-selected_dep <- c('Nicaragua')
+selected_dep <- c('Masaya')
 selected_act <- c('tiendas_y_ocio')
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
