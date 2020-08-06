@@ -13,7 +13,7 @@ movilidad_nica <- movilidad_global %>%
   mutate (sub_region_1 = ifelse(metro_area == 'Managua Metropolitan Area', 'Managua', as.character(sub_region_1)),
           sub_region_1 = ifelse(sub_region_1 == "", 'Nicaragua', as.character(sub_region_1))) %>%
   select (-metro_area) %>%
-  rename(., dep = sub_region_1, 
+  rename(., State = sub_region_1, 
          tiendas_y_ocio = retail_and_recreation_percent_change_from_baseline,
          paradas_de_transporte = transit_stations_percent_change_from_baseline,
          supermercados_y_farmacias = grocery_and_pharmacy_percent_change_from_baseline,
@@ -29,23 +29,23 @@ movilidad_nica_final <- movilidad_nica %>%
          dias = as.numeric(fecha))
 
 # create filter
-selected_dep <- c('Masaya', 'Granada')
+selected_dep <- c('Masaya', 'Granada', 'Nicaragua')
 selected_act <- c('tiendas_y_ocio')
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
 
 # Create graphs
 mov_nica <- movilidad_nica_final %>%
-  filter(dep %in% selected_dep, actividad %in% selected_act) %>%
-  group_by(dep) %>%
+  filter(State %in% selected_dep, actividad %in% selected_act) %>%
+  group_by(State) %>%
   mutate(mov = rollmean(mov_desde_lineabase, k = 4, fill = NA)) %>%
   ungroup() %>%
-  ggplot(aes(fecha, mov, col = dep)) +
+  ggplot(aes(fecha, mov, col = State)) +
   geom_point(shape = 21, aes(fill = mov), size = 5, stroke = 1) + 
   geom_line() + 
   ylab("Moving mean of 1 month from baseline") +
   theme_minimal(base_size = 16, base_family = "Georgia") +
-  labs(title = "Mobility trend post COVID-19 in selected states", 
+  labs(title = "Mobility trend post COVID-19 in selected states of Nicaragua", 
        caption = "Source: Google Mobility") +
   transition_reveal(fecha) 
 
