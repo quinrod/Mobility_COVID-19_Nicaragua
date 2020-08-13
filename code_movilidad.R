@@ -29,30 +29,51 @@ movilidad_nica_final <- movilidad_nica %>%
          dias = as.numeric(fecha))
 
 # create filter
-selected_dep <- c('Masaya', 'Granada', 'Nicaragua')
-selected_act <- c('tiendas_y_ocio')
+selected_dep <- c('Nicaragua')
+selected_act <- c('tiendas_y_ocio','paradas_de_transporte',
+                  'supermercados_y_farmacias',' parques',
+                  'locales_de_trabajo','zonas_residenciales')
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
-
+dev.off()
 # Create graphs
 mov_nica <- movilidad_nica_final %>%
   filter(State %in% selected_dep, actividad %in% selected_act) %>%
   group_by(State) %>%
   mutate(mov = rollmean(mov_desde_lineabase, k = 4, fill = NA)) %>%
   ungroup() %>%
-  ggplot(aes(fecha, mov, col = State)) +
-  geom_point(shape = 21, aes(fill = mov), size = 5, stroke = 1) + 
-  geom_line() + 
-  ylab("Moving mean of 1 month from baseline") +
+  ggplot(aes(fecha, mov, col = actividad)) +
+  geom_line(show.legen=TRUE) + 
+  ylab("Media móvil de 1 mes desde línea de base") +
   theme_minimal(base_size = 16, base_family = "Georgia") +
-  labs(title = "Mobility trend post COVID-19 in selected states of Nicaragua", 
-       caption = "Source: Google Mobility") +
-  transition_reveal(fecha) 
+  labs(title = "Tendencia de movilidad en Nicaragua", 
+       caption = "Fuente: Google movilidad") 
+
+figures <- "/Users/quinrod/projects/GitHub/Mobility-COVID-19_Nicaragua/figures/"
+ggsave(paste(figures,'movilidad.png'), 
+       device = "png", 
+       width = 16,
+       height = 12,
+       units = 'in')
+
+#+transition_reveal(fecha) 
 
 # save as a GIF
 animate(mov_nica, fps = 10, width = 750, height = 450)
 anim_save("/Users/quinrod/projects/GitHub/Mobility-COVID-19_Nicaragua/figures/movilidad.gif")
 
+mov_nica <- movilidad_nica_final %>%
+  filter(State %in% selected_dep, actividad %in% selected_act) %>%
+  group_by(State) %>%
+  mutate(mov = rollmean(mov_desde_lineabase, k = 4, fill = NA)) %>%
+  ungroup() %>%
+  ggplot(aes(fecha, mov, col = actividad)) +
+  geom_point(shape = 21, aes(fill = mov), size = 5, stroke = 1) + 
+  geom_line() + 
+  ylab("Media móvil de 1 mes desde línea de base") +
+  theme_minimal(base_size = 16, base_family = "Georgia") +
+  labs(title = "Tendencia de movilidad en Nicaragua", 
+       caption = "Source: Google movilidad") 
 
 
   
