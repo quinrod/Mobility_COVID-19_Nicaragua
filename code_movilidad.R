@@ -30,13 +30,18 @@ movilidad_nica_final <- movilidad_nica %>%
          State = ifelse(State == 'Leon', 'León',as.character(State)),
          State = ifelse(State == 'Esteli', 'Estelí',as.character(State)),
          State = ifelse(State == 'South Caribbean Coast Autonomous Region', 'RACCS',as.character(State)),
-         Actividad = ifelse(State == 'North Caribbean Coast Autonomous Region', 'RACCN',as.character(State)),
-         Actividad = ifelse(State == 'North Caribbean Coast Autonomous Region', 'RACCN',as.character(State)))
+         Actividad = ifelse(Actividad == 'tiendas_y_ocio', 'Tiendas y ocio',as.character(Actividad)),
+         Actividad = ifelse(Actividad == 'paradas_de_transporte', 'Paradas de bus',as.character(Actividad)),
+         Actividad = ifelse(Actividad == 'supermercados_y_farmacias', 'Supermercados y farmacias',as.character(Actividad)),
+         Actividad = ifelse(Actividad == 'parques', 'Parques',as.character(Actividad)),
+         Actividad = ifelse(Actividad == 'locales_de_trabajo', 'Locales de trabajo',as.character(Actividad)),
+         Actividad = ifelse(Actividad == 'zonas_residenciales', 'Zonas residenciales',as.character(Actividad))
+         )
 
 # create filter
 selected_dep <- c('Nicaragua')
-selected_act <- c('tiendas_y_ocio','paradas_de_transporte',
-                  'supermercados_y_farmacias') #'parques','locales_de_trabajo','zonas_residenciales'
+selected_act <- c('Tiendas y ocio','Paradas de bus',
+                  'Supermercado y farmacias') #'Parques','Locales de trabajo','zonas_residenciales'
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
 dev.off()
