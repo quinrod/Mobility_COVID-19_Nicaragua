@@ -41,7 +41,7 @@ movilidad_nica_final <- movilidad_nica %>%
 # create filter
 selected_dep <- c('Nicaragua')
 selected_act <- c('Tiendas y ocio','Paradas de bus',
-                  'Supermercado y farmacias') #'Parques','Locales de trabajo','zonas_residenciales'
+                  'Supermercados y farmacias') #'Parques','Locales de trabajo','zonas_residenciales'
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
 dev.off()
@@ -61,7 +61,7 @@ mov_nica <- movilidad_nica_final %>%
   scale_x_date(labels = date_format("%b %Y")) +
   theme(plot.title = element_text(hjust = 0.5, vjust = 0.5),
         plot.subtitle = element_text(hjust = 3),
-        axis.text.x = element_text(hjust = 0.5, vjust = 0.5, size = 10))
+        axis.text.x = element_text(hjust = 1, vjust = 1, size = 10))
 
 figures <- "/Users/quinrod/projects/GitHub/Mobility-COVID-19_Nicaragua/figures/"
 ggsave(paste(figures,'movilidad.png'), 
