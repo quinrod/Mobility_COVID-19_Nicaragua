@@ -44,7 +44,6 @@ selected_act <- c('Tiendas y ocio','Paradas de bus',
                   'Supermercados y farmacias') #'Parques','Locales de trabajo','zonas_residenciales'
 
 ## paradas_de_transporte, supermercados_y_farmacias, parques, locales_de_trabajo, zonas_residenciales
-dev.off()
 
 # Create graphs
 mov_nica <- movilidad_nica_final %>%
@@ -58,10 +57,10 @@ mov_nica <- movilidad_nica_final %>%
   theme_minimal(base_size = 16, base_family = "Georgia") +
   labs(title = "Tendencia de movilidad en Nicaragua", 
        caption = "Fuente: Google movilidad") +
-  scale_x_date(labels = date_format("%b %Y")) +
-  theme(plot.title = element_text(hjust = 0.5, vjust = 0.5),
-        plot.subtitle = element_text(hjust = 3),
-        axis.text.x = element_text(hjust = 1, vjust = 1, size = 10))
+  scale_x_date(date_labels = "%b %y", date_breaks = "1 month", date_minor_breaks = "1 month") +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 1),
+        plot.subtitle = element_text(vjust = 1),
+        axis.text.x = element_text(vjust = 7, size = 10))
 
 figures <- "/Users/quinrod/projects/GitHub/Mobility-COVID-19_Nicaragua/figures/"
 ggsave(paste(figures,'movilidad.png'), 
